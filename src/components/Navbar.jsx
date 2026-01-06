@@ -42,13 +42,17 @@ function Navbar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
 
-          <Box sx={{ flexGrow: 1, display: 'flex',justifyContent: "center", alignItems: "center" }}>
-            <MenuItem>
-              <NavLink to="/" >Home</NavLink>
-            </MenuItem>
-            <MenuItem>
-              <NavLink to="/paste" >Paste</NavLink>
-            </MenuItem>
+          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: "center", alignItems: "center" }}>
+            <NavLink to="/" >
+              <MenuItem>
+                Home
+              </MenuItem>
+            </NavLink>
+            <NavLink to="/paste" >
+              <MenuItem>
+                Paste
+              </MenuItem>
+            </NavLink>
           </Box>
         </Toolbar>
       </Container>
