@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes} from "react-router"
 import Home from './components/Home.jsx'
 import Paste from './components/Paste.jsx'
 import { Toaster } from 'react-hot-toast'
+import ViewPaste from './components/ViewPaste.jsx'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Home />} />
       <Route path='/paste' element={<Paste />} />
+      <Route path='/paste/:id' element={<ViewPaste />}/>
     </Routes>
     
     </BrowserRouter>

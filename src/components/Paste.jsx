@@ -1,16 +1,24 @@
 import { TextField } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { deletePaste, updatePaste } from '../redux/pasteSlice';
+import toast from 'react-hot-toast';
+import { Link } from 'react-router';
 
 const Paste = () => {
   const pasteData = useSelector((state) => state.paste);
   const dispatch = useDispatch();
-  // console.log(pasteData)
+
   const handleDelete = (id) => {
     dispatch(deletePaste(id))
-
+    toast.success("Paste deleted successfuly");
   }
+
+  // const handleUpdate = () => {
+
+  // }
   return (
     <div className="container mt-4 m-auto w-[70%]">
       <div>
@@ -23,8 +31,10 @@ const Paste = () => {
               <h3 className="mb-2">{item.title}</h3>
               <p>{new Date().toLocaleDateString()}</p>
             </div>
-            <div>
+            <div className='flex gap-2 items-center'>
               <DeleteOutlineIcon onClick={() => handleDelete(item.id)} className="cursor-pointer w-1.5" titleAccess='Delete paste' />
+              <Link to={`/?pasteId=${item.id}`}><EditIcon className="cursor-pointer w-1.5" titleAccess='Update paste' /></Link>
+              <Link to={`/paste/${item.id}`}><VisibilityIcon className="cursor-pointer w-1.5" titleAccess='View paste' /></Link>
             </div>
           </div>
         ))
