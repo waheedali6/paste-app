@@ -1,36 +1,60 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addPaste } from '../redux/pasteSlice';
+import { addPaste, updatePaste } from '../redux/pasteSlice';
 import { Button, TextField } from '@mui/material';
 import { Textarea } from '@mui/joy';
 import toast from 'react-hot-toast';
+import { useSearchParams } from 'react-router';
 
 const Home = () => {
   const [pasteData, setPasteData] = useState({
     title: "",
     content: "",
   });
+  const [ searchParams, setSearchParams ] = useSearchParams();
+  const pasteId = searchParams.get("pasteId");
+  // console.log(pasteId)
 
-
-
-
-  const paste = useSelector((state) => state.paste);
   const dispatch = useDispatch();
-  localStorage.setItem('username', 'Alice');
+  const pastes = useSelector((state) => state.paste)
 
   const handleSubmit = () => {
     const data = {
-      id : Math.random().toString(16).slice(2,6),
-      title : pasteData.title,
-      content : pasteData.content
+      id: Math.random().toString(16).slice(2, 6),
+      title: pasteData.title,
+      content: pasteData.content
     }
-    dispatch(addPaste(data));
-    toast.success("Paste Created Successfuly")
-    setPasteData({
-      title: "",
-      content: "",
-    })
+
+    if (pasteId) {
+      dispatch(updatePaste(pasteData));
+    } else {
+      dispatch(addPaste(data));
+      setPasteData({
+        title: "",
+        content: "",
+      });
+    }
   }
+
+  useMemo(() => {
+    if (pasteId) {
+      const paste = pastes.find((paste) => paste.id === pasteId);
+      // dispatch((updatePaste(paste)))
+      if (paste) {
+        setPasteData({
+          id: paste.id,
+          title: paste.title,
+          content: paste.content
+        })
+      }
+    }
+    // if () {
+
+    // } else {
+
+    // }
+
+  }, [pasteId])
 
 
   return (
@@ -55,7 +79,7 @@ const Home = () => {
           loading={false}
           onClick={handleSubmit}
           variant="contained"
-        >Add to Paste
+        >{pasteId ? "Update paste" : "Add paste"}
         </Button>
       </div>
       <div className="mt-3">
@@ -72,11 +96,7 @@ const Home = () => {
           variant="outlined"
         />
       </div>
-      <div>
-        <Button onClick={() => console.log(paste)}>Click me</Button>
-      </div>
     </div>
-
   )
 }
 
