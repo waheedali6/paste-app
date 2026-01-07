@@ -8,9 +8,24 @@ export const pasteSlice = createSlice({
         localStorage.getItem("paste") ? JSON.parse(localStorage.getItem("paste")) : [],
     reducers: {
         addPaste: (state, action) => {
-            state.push(action.payload);
-            toast.success("Paste Created Successfuly");
-            localStorage.setItem("paste", JSON.stringify(state));
+            const pasteData = action.payload;
+            const checkExists = () => {
+                let title = state.some((item) => item.title === pasteData.title);
+                let content = state.some((item) => item.content === pasteData.content);
+                return { title, content };
+            };
+            const alreadyExists = checkExists();
+            if (!alreadyExists.title && !alreadyExists.content) {
+                state.push(pasteData);
+                toast.success("Paste Created Successfuly");
+                localStorage.setItem("paste", JSON.stringify(state));
+            } else {
+                if (alreadyExists.title) {
+                    toast.error("Title Already Exists");
+                } else if (alreadyExists.content) {
+                    toast.error("Content Already Exists");
+                }
+            }
         },
         updatePaste: (state, action) => {
             // console.log(action.payload);

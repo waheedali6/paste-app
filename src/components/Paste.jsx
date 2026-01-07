@@ -6,8 +6,10 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { deletePaste, updatePaste } from '../redux/pasteSlice';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
+import react, { useState } from 'react';
 
 const Paste = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   const pasteData = useSelector((state) => state.paste);
   const dispatch = useDispatch();
 
@@ -16,16 +18,14 @@ const Paste = () => {
     toast.success("Paste deleted successfuly");
   }
 
-  // const handleUpdate = () => {
-
-  // }
+  const filteredPaste = pasteData.filter((item) => item.title?.toLowerCase().includes(searchTerm?.toLowerCase()));
   return (
     <div className="container mt-4 m-auto w-[70%]">
       <div>
-        <TextField label="Search" size='small' fullWidth />
+        <TextField onChange={(e) => setSearchTerm(e.target.value)} label="Search" size='small' fullWidth />
       </div>
       <div className="flex flex-col mt-2">
-        {pasteData.map((item, index) => (
+        {filteredPaste.map((item, index) => (
           <div className="card p-4 rounded flex justify-between items-center mt-2 bg-[#eff9fb]" key={index}>
             <div>
               <h3 className="mb-2">{item.title}</h3>
