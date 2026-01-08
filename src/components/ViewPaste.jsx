@@ -31,7 +31,6 @@ const ViewPaste = () => {
             <div className="flex content-center justify-between">
                 <TextField
                     className="w-[79%]"
-                    name='title'
                     value={pasteData.title}
                     size="small"
                     id="outlined-basic"
@@ -54,7 +53,6 @@ const ViewPaste = () => {
             </div>
             <div className="mt-3">
                 <Textarea
-                    name='content'
                     minRows={18}
                     value={pasteData.content}
                     size="md"
