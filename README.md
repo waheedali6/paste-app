@@ -44,7 +44,7 @@ It allows users to store code snippets locally and manage them for future use.
 ## Getting Started Locally
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/waheedali6/paste-app.git
 cd paste-app
 npm install
 npm run dev
